@@ -32,29 +32,18 @@ public class ControladoraGames {
     }
     
     private void atualizarGames(Games game, Vector linha) {
-        // Certifique-se de verificar os tipos antes de realizar as conversões
-        if (linha.get(0) instanceof Integer) {
-            game.setAnoLancamento((Integer) linha.get(0));
-        } 
-    
-        if (linha.get(1) instanceof String) {
-            game.setNome((String) linha.get(1));
-        } 
-    
-        if (linha.get(2) instanceof Double) {
-            game.setNotaMetaCritic((Double) linha.get(2));
-        } 
+        game.setAnoLancamento((int)linha.get(0));
+        game.setNome(linha.get(1).toString());
+        game.setNotaMetaCritic((double)linha.get(2));
     }
     
-    private Vector<Object> criarLinhaGames(Games game) {
-        Vector<Object> linha = new Vector<>();
-        linha.add(game.getAnoLancamento());
-        linha.add(game.getNome());
-        linha.add(game.getNotaMetaCritic());
+    private Vector criarLinhaGames(Games game) {
+        Vector linha = new Vector();
+        linha.addElement(game.getAnoLancamento());
+        linha.addElement(game.getNome());
+        linha.addElement(game.getNotaMetaCritic());
         return linha;
     }
-    
-     
     
     public void inserirNovoFilme(Vector linha) throws FileNotFoundException, IOException, ClassNotFoundException {
         Games novoGame = new Games();

@@ -18,7 +18,6 @@ import java.util.Vector;
 
 /**
  *
- * @author Giovany
  */
 public class GamesFileDao {
 

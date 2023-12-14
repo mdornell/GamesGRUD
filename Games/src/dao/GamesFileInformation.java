@@ -7,7 +7,6 @@ package dao;
 
 /**
  *
- * @author Giovany
  */
 public class GamesFileInformation {
     private static String nomeArquivo = "Games.txt";
