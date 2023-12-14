@@ -9,8 +9,8 @@ package dao;
  *
  * @author Giovany
  */
-public class FilmeFileInformation {
-    private static String nomeArquivo = "filme.txt";
+public class GamesFileInformation {
+    private static String nomeArquivo = "Games.txt";
     private static String caminhoArquivo = "";
 
     public static String getCaminhoArquivo() {

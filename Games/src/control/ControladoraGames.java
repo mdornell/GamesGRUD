@@ -6,16 +6,16 @@
 package control;
 
 import dao.*;
-import domain.Filme;
+import domain.Games;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Vector;
 
 
-public class ControladoraFilmes {
-    private Vector<Filme> filmes;
+public class ControladoraGames {
+    private Vector<Games> games;
     private int marcador;
-    FilmeFileDao filmeDao;
+    GamesFileDao gamesDao;
     
     private String obterNomeColunaBanco(String coluna) {
         if (coluna.equals("Código"))
@@ -31,8 +31,8 @@ public class ControladoraFilmes {
         return "id";
     }
 
-    public ControladoraFilmes() {
-        this.filmeDao = new FilmeFileDao();
+    public ControladoraGames() {
+        this.filmeDao = new GamesFileDao();
     }
     
     private void atualizarFilme(Filme filme, Vector linha){

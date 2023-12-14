@@ -6,6 +6,6 @@ import domain.Games;
 public class GamesPorNomeCrescente implements Comparator<Games> {
     @Override
     public int compare(Games o1, Games o2) {
-        return o1.getNome().compareTo(o2.getNome());
+        return (o1.getNome().compareTo(o2.getNome()));
     } 
 }
