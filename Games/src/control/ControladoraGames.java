@@ -18,79 +18,91 @@ public class ControladoraGames {
     GamesFileDao gamesDao;
     
     private String obterNomeColunaBanco(String coluna) {
-        if (coluna.equals("Código"))
-            return "codigo";
+        if (coluna.equals("Ano Lançamento"))
+            return "lancamento";
         if (coluna.equals("Nome"))
             return "nome";
-        if (coluna.equals("Genero"))
-            return "genero";
-        if (coluna.equals("Produtora"))
-            return "produtora";
-        if (coluna.equals("Data Compra"))
-            return "datacompra";
+        if (coluna.equals("Meta Critic"))
+            return "metacritic";
         return "id";
     }
 
     public ControladoraGames() {
-        this.filmeDao = new GamesFileDao();
+        this.gamesDao = new GamesFileDao();
     }
     
-    private void atualizarFilme(Filme filme, Vector linha){
-        filme.setCodigo(linha.get(0).toString());
-        filme.setNome(linha.get(1).toString());
-        filme.setGenero(linha.get(2).toString());
-        filme.setProdutora(linha.get(3).toString());
-        filme.setDatacompra(linha.get(4).toString());       
+    private void atualizarGames(Games game, Vector linha) {
+        // Certifique-se de verificar os tipos antes de realizar as conversões
+        if (linha.get(0) instanceof Integer) {
+            game.setAnoLancamento((Integer) linha.get(0));
+        } 
+    
+        if (linha.get(1) instanceof String) {
+            game.setNome((String) linha.get(1));
+        } 
+    
+        if (linha.get(2) instanceof Double) {
+            game.setNotaMetaCritic((Double) linha.get(2));
+        } 
     }
     
-    private Vector criarLinhaFilme(Filme filme) {
-        Vector linha = new Vector();
-        linha.addElement(filme.getCodigo());
-        linha.addElement(filme.getNome());
-        linha.addElement(filme.getGenero());
-        linha.addElement(filme.getProdutora());
-        linha.addElement(filme.getDatacompra());
+    private Vector<Object> criarLinhaGames(Games game) {
+        Vector<Object> linha = new Vector<>();
+        linha.add(game.getAnoLancamento());
+        linha.add(game.getNome());
+        linha.add(game.getNotaMetaCritic());
         return linha;
     }
+    
      
     
-    public void inserirNovoFilme(Vector linha) throws FileNotFoundException, IOException, ClassNotFoundException{
-        Filme filme = new Filme();
-        this.atualizarFilme(filme, linha);
-        this.filmes.add(filme);
-        filmeDao.salvarFilmes(this.filmes);
+    public void inserirNovoFilme(Vector linha) throws FileNotFoundException, IOException, ClassNotFoundException {
+        Games novoGame = new Games();
+        this.atualizarGames(novoGame, linha);
+        this.games.add(novoGame);
+        gamesDao.salvarGames(this.games);
     }
+    
     
     public void setMarcador(int marcador){
         this.marcador = marcador;
     }
 
-    public void alterarFilme(Vector linha) throws FileNotFoundException, IOException, ClassNotFoundException {
-        Filme filme = filmes.get(marcador);
-        this.atualizarFilme(filme, linha);
-        filmeDao.salvarFilmes(this.filmes);
+    public void alterarGames(Vector linha) throws FileNotFoundException, IOException, ClassNotFoundException {
+        Games gameAtual = games.get(marcador);
+        this.atualizarGames(gameAtual, linha);
+        gamesDao.salvarGames(this.games);
     }
     
-    public void  excluirFilme() throws FileNotFoundException, IOException, ClassNotFoundException{
-        filmes.remove(marcador);
-        filmeDao.salvarFilmes(this.filmes);
+    
+    public void excluirFilme() throws FileNotFoundException, IOException, ClassNotFoundException {
+        if (marcador >= 0 && marcador < games.size()) {
+            games.remove(marcador);
+            gamesDao.salvarGames(this.games);
+        } else {
+            // Tratando o caso em que o marcador está fora dos limites
+            System.out.println("Índice inválido para exclusão.");
+        }
     }
     
-    private Vector<Filme> obterFilmes(String coluna, boolean crescente) throws FileNotFoundException, IOException, ClassNotFoundException{
+    
+    private Vector<Games> obterGames(String coluna, boolean crescente) throws FileNotFoundException, IOException, ClassNotFoundException {
         String nomeColunaBanco = this.obterNomeColunaBanco(coluna);
-        filmes = filmeDao.obterFilmes(nomeColunaBanco, crescente);
-        return filmes; 
+        Vector<Games> gamesResult = gamesDao.obterGame(nomeColunaBanco, crescente);
+        return gamesResult;
     }
+    
 
-    public Vector obterLinhasFilmes(String coluna, boolean crescente) throws FileNotFoundException, IOException, ClassNotFoundException {
-        Vector<Filme> filmes = obterFilmes(coluna, crescente);
+    public Vector obterLinhasGames(String coluna, boolean crescente) throws FileNotFoundException, IOException, ClassNotFoundException {
+        Vector<Games> gamesList = obterGames(coluna, crescente);
         Vector linhas = new Vector();
         
         // Montando as linhas
-        for(int i = 0; i < filmes.size(); i++){
-            Filme filme = filmes.get(i);
-            linhas.addElement(this.criarLinhaFilme(filme));
+        for(int i = 0; i < gamesList.size(); i++){
+            Games game = gamesList.get(i);
+            linhas.addElement(this.criarLinhaGames(game));
         }
         return linhas;
     }
+    
 }

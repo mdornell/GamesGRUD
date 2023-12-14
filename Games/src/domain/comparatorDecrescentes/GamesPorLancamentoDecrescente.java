@@ -3,7 +3,7 @@ package domain.comparatorDecrescentes;
 import java.util.Comparator;
 import domain.Games;
 
-public class GamesPorLancamento implements Comparator<Games>{
+public class GamesPorLancamentoDecrescente implements Comparator<Games>{
 
     @Override
     public int compare(Games o1, Games o2) {

@@ -22,14 +22,14 @@ import java.util.Vector;
  */
 public class GamesFileDao {
 
-    public void salvarFilmes(Vector<Games> filmes) throws FileNotFoundException, IOException, ClassNotFoundException {
+    public void salvarGames(Vector<Games> games) throws FileNotFoundException, IOException, ClassNotFoundException {
         FileOutputStream arquivo = new FileOutputStream(GamesFileInformation.getCaminhoArquivo() + GamesFileInformation.getNomeArquivo());
 
         //Classe responsavel por inserir os objetos
         ObjectOutputStream objGravar = new ObjectOutputStream(arquivo);
 
-        //Grava o objeto de vetor de filmes no arquivo
-        objGravar.writeObject(filmes);
+        //Grava o objeto de vetor de games no arquivo
+        objGravar.writeObject(games);
         objGravar.flush();
         objGravar.close();
         arquivo.flush();
@@ -65,14 +65,14 @@ public class GamesFileDao {
     public Vector<Games> obterGame(String coluna, boolean crescente) throws FileNotFoundException, IOException, ClassNotFoundException {
         Vector<Games> games = this.obterGames();
         if (coluna.equals("lancamento")){
-            if (crescente) Collections.sort(games, new GamesPorLancamentoCrescente();
+            if (crescente) Collections.sort(games, new GamesPorLancamentoCrescente());
             else Collections.sort(games, new GamesPorLancamentoDecrescente());
         }
         else if (coluna.equals("metacritic")){
             if (crescente) Collections.sort(games, new GamesPorMetaCriticCrescemte());
             else Collections.sort(games, new GamesPorMetaCriticDecrescente());
         }
-        else if (coluna.equals("genero")){
+        else if (coluna.equals("nome")){
             if (crescente) Collections.sort(games, new GamesPorNomeCrescente());
             else Collections.sort(games, new GamesPorNomeDecrescente());
         }

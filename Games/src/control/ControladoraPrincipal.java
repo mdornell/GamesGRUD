@@ -5,14 +5,14 @@
 
 package control;
 
-import windows.JanelaPrincipalFilme;
-import windows.JanelaVisualizarFilme;
+import windows.JanelaPrincipalGames;
+import windows.JanelaVisualizarGames;
 
 
 public class ControladoraPrincipal {
     public static void main(String argsp[])
     {
-        JanelaVisualizarFilme janela = new JanelaPrincipalFilme();
+        JanelaVisualizarGames janela = new JanelaPrincipalGames();
         janela.executar();
     }
 
