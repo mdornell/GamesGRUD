@@ -11,7 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.*;
 
-
 /**
  *
  * @author Giovany
@@ -27,8 +26,8 @@ public class JanelaVisualizarGames {
         if (colunas == null) {
             colunas = new Vector(10);
 
-            colunas.addElement("Ano Lançamento");
             colunas.addElement("Nome");
+            colunas.addElement("Ano Lançamento");
             colunas.addElement("Meta Critic");
         }
 
@@ -46,8 +45,6 @@ public class JanelaVisualizarGames {
             Vector linhas;
             linhas = controladora.obterLinhasGames(coluna, crescente);
 
-
-
             System.out.println("Legenda da ordem das colunas");
             for (int i = 0; i < colunas.size() - 1; i++) {
                 System.out.print(colunas.get(i) + "   -   ");
@@ -62,16 +59,21 @@ public class JanelaVisualizarGames {
                 for (int j = 0; j < colunas.size() - 1; j++) {
                     System.out.print(linha.get(j) + "   -   ");
                 }
-                String valor = (String) linha.get(colunas.size() - 1);
-                if (valor.equals("")) {
-                    System.out.print(" null ");
+                Object valorObjeto = linha.get(colunas.size() - 1);
+                if (valorObjeto instanceof Double) {
+                    System.out.print((Double) valorObjeto);
                 } else {
-                    System.out.print(valor);
+                    String valor = (String) valorObjeto;
+                    if (valor.equals("")) {
+                        System.out.print(" null ");
+                    } else {
+                        System.out.print(valor);
+                    }
                 }
                 System.out.println("");
                 System.out.println("----------------------------------------------------------------------------------------------------------");
-
             }
+
             System.out.println("===========================================================================================================");
         } catch (FileNotFoundException ex) {
             Logger.getLogger(JanelaVisualizarGames.class.getName()).log(Level.SEVERE, null, ex);
@@ -119,7 +121,7 @@ public class JanelaVisualizarGames {
             this.montarLayout();
 
             opcao = leitorOpcao.nextInt();
-            
+
             limparTabelaGames();
             // sair
             if (opcao == 0) {

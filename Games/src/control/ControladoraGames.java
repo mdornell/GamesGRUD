@@ -18,10 +18,10 @@ public class ControladoraGames {
     GamesFileDao gamesDao;
     
     private String obterNomeColunaBanco(String coluna) {
-        if (coluna.equals("Ano Lançamento"))
-            return "lancamento";
         if (coluna.equals("Nome"))
             return "nome";
+        if (coluna.equals("Ano Lançamento"))
+            return "lancamento";
         if (coluna.equals("Meta Critic"))
             return "metacritic";
         return "id";
@@ -32,20 +32,20 @@ public class ControladoraGames {
     }
     
     private void atualizarGames(Games game, Vector linha) {
-        game.setAnoLancamento((int)linha.get(0));
-        game.setNome(linha.get(1).toString());
-        game.setNotaMetaCritic((double)linha.get(2));
+        game.setAnoLancamento(Integer.parseInt(linha.get(1).toString()));
+        game.setNome(linha.get(0).toString());
+        game.setNotaMetaCritic(Double.parseDouble(linha.get(2).toString()));
     }
     
     private Vector criarLinhaGames(Games game) {
         Vector linha = new Vector();
-        linha.addElement(game.getAnoLancamento());
         linha.addElement(game.getNome());
+        linha.addElement(game.getAnoLancamento());
         linha.addElement(game.getNotaMetaCritic());
         return linha;
     }
     
-    public void inserirNovoFilme(Vector linha) throws FileNotFoundException, IOException, ClassNotFoundException {
+    public void inserirNewGame(Vector linha) throws FileNotFoundException, IOException, ClassNotFoundException {
         Games novoGame = new Games();
         this.atualizarGames(novoGame, linha);
         this.games.add(novoGame);
@@ -64,7 +64,7 @@ public class ControladoraGames {
     }
     
     
-    public void excluirFilme() throws FileNotFoundException, IOException, ClassNotFoundException {
+    public void excluirGame() throws FileNotFoundException, IOException, ClassNotFoundException {
         if (marcador >= 0 && marcador < games.size()) {
             games.remove(marcador);
             gamesDao.salvarGames(this.games);
@@ -77,18 +77,18 @@ public class ControladoraGames {
     
     private Vector<Games> obterGames(String coluna, boolean crescente) throws FileNotFoundException, IOException, ClassNotFoundException {
         String nomeColunaBanco = this.obterNomeColunaBanco(coluna);
-        Vector<Games> gamesResult = gamesDao.obterGame(nomeColunaBanco, crescente);
-        return gamesResult;
+        games = gamesDao.obterGame(nomeColunaBanco, crescente);
+        return games;
     }
     
 
     public Vector obterLinhasGames(String coluna, boolean crescente) throws FileNotFoundException, IOException, ClassNotFoundException {
-        Vector<Games> gamesList = obterGames(coluna, crescente);
+        Vector<Games> games = obterGames(coluna, crescente);
         Vector linhas = new Vector();
         
         // Montando as linhas
-        for(int i = 0; i < gamesList.size(); i++){
-            Games game = gamesList.get(i);
+        for(int i = 0; i < games.size(); i++){
+            Games game = games.get(i);
             linhas.addElement(this.criarLinhaGames(game));
         }
         return linhas;

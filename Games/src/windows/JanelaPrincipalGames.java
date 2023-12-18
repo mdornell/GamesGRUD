@@ -17,9 +17,9 @@ public class JanelaPrincipalGames extends JanelaVisualizarGames {
         super.montarCabecalho();
         Vector colunas = this.obterNomeColunasTabela();
         int qtMenus = colunas.size() * 2;
-        System.out.println(" " + (qtMenus + 1) + ") Incluir Novo Filme");
-        System.out.println(" " + (qtMenus + 2) + ") Alterar Filme");
-        System.out.println(" " + (qtMenus + 3) + ") Excluir Filme");
+        System.out.println(" " + (qtMenus + 1) + ") Incluir Novo Game");
+        System.out.println(" " + (qtMenus + 2) + ") Alterar Game");
+        System.out.println(" " + (qtMenus + 3) + ") Excluir Game");
     }
 
     private Vector lerDados() {
@@ -68,7 +68,7 @@ public class JanelaPrincipalGames extends JanelaVisualizarGames {
                 limparTabelaGames();
                 Vector dados = lerDados();
                 try {
-                    this.controladora.inserirNovoFilme(dados);
+                    this.controladora.inserirNewGame(dados);
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(JanelaPrincipalGames.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
@@ -98,7 +98,7 @@ public class JanelaPrincipalGames extends JanelaVisualizarGames {
                 System.out.println("Digite o número da linha que deseja excluir: ");
                 this.controladora.setMarcador(leitorOpcao.nextInt());
                 try {
-                    this.controladora.excluirFilme();
+                    this.controladora.excluirGame();
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(JanelaPrincipalGames.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
